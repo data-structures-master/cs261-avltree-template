@@ -1,12 +1,11 @@
 # DO NOT MODIFY THIS FILE
-# Run me via: python3 -m unittest test_avl
+# Run me via: python3 -m unittest test_avl_tree
 
 import unittest
 import time
 from avl import AVLTree
 
-
-class TestAVLTree(unittest.TestCase):
+class TestBinarySearchTree(unittest.TestCase):
 
     """
     Initialization
@@ -14,7 +13,7 @@ class TestAVLTree(unittest.TestCase):
 
     def test_instantiation(self):
         """
-        Test 1: A AVLTree exists.
+        A AVLTree exists.
         """
         try:
             AVLTree()
@@ -23,661 +22,665 @@ class TestAVLTree(unittest.TestCase):
 
     # def test_initial_attributes(self):
     #     """
-    #     Test 2: A AVL Tree is a recursive structure. When we refer to an object that "is a avl_tree,"
-    #     we are referring to a root node of an AVL tree.
-    #     Every node has a left child, right child, key, height, and balance factor.
-    #     A new AVLTree has a left, right, key, that are each None, a height set to 1 and a balance factor set to 0.
+    #     A AVL tree is a recursive structure. When we refer to an object,
+    #     we are referring to a node of the AVL tree.
+    #     Every node has a left child, right child, key, parent, and balance_factor.
+    #     A new AVL tree has a left, right, key, and parent that are each None, and a
+    #     balance_factor equal to 0.
     #     Hint: Define an initializer.
     #     """
-    #     avl_tree = AVLTree()
-    #     self.assertIsNone(avl_tree.left)
-    #     self.assertIsNone(avl_tree.right)
-    #     self.assertIsNone(avl_tree.key)
-    #     self.assertEqual(1, avl_tree.height)
-    #     self.assertEqual(0, avl_tree.balance_factor)
+    #     avl = AVLTree()
+    #     self.assertIsNone(avl.left)
+    #     self.assertIsNone(avl.right)
+    #     self.assertIsNone(avl.key)
+    #     self.assertEqual(0,avl.balance_factor)
 
-    # # """
-    # # Cute, single-level trees. (Depth of zero.)
-    # # Insertion
-    # # When inserting a node, calculate the height of each node 
-    # # """
+    # """
+    # Test helper methods
+    # """
+    
+    # def test_is_leaf_true(self):
+    #     """
+    #     A node with no children is a leaf
+    #     """
+    #     avl = AVLTree(10)
+    #     self.assertTrue(avl._is_leaf())
 
-    # def test_height_single_smaller(self):
+    # def test_is_leaf_false(self):
     #     """
-    #     Test 3: Inserting a node into a single-level tree appends the new node as the
-    #     left child, when the new node key is less than the parent's key.
-    #     (A new node whose key is <= parent key becomes the left child.)
-    #     The height of each node is equal to the height of its largest child + 1
+    #     A node with children is not a leaf
     #     """
-    #     avl_tree = AVLTree(5)
-    #     child = AVLTree(1)
-    #     avl_tree.insert(child)
-    #     self.assertEqual(child, avl_tree.left)
-    #     self.assertEqual(2, avl_tree.height)
-    #     self.assertEqual(1, avl_tree.left.height)
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     self.assertFalse(avl._is_leaf())
+
+    # def test_has_left_child_true(self):
+    #     """
+    #     Node has a left child
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     self.assertTrue(avl._has_left_child())
+
+    # def test_has_left_child_false(self):
+    #     """
+    #     Node does not have a left child
+    #     """
+    #     avl = AVLTree(10)
+    #     self.assertFalse(avl._has_left_child())
+
+    # def test_has_right_child_true(self):
+    #     """
+    #     Node has a right child
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(20))
+    #     self.assertTrue(avl._has_right_child())
+
+    # def test_has_right_child_false(self):
+    #     """
+    #     Node does not have a right child
+    #     """
+    #     avl = AVLTree(10)
+    #     self.assertFalse(avl._has_right_child())
+
+    # def test_has_left_child_only_true(self):
+    #     """
+    #     Node has only a left child
+    #     """
+    #     avl = AVLTree(10)
+    #     avl.left = AVLTree(5)
+    #     self.assertTrue(avl._has_left_child_only())
+
+    # def test_has_left_child_only_false(self):
+    #     """
+    #     Node does not have only a left child
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     self.assertFalse(avl._has_left_child_only())
+
+    # def test_has_right_child_only_true(self):
+    #     """
+    #     Node has only a right child
+    #     """
+    #     avl = AVLTree(10)
+    #     avl.right = AVLTree(20)
+    #     self.assertTrue(avl._has_right_child_only())
+
+    # def test_has_right_child_only_false(self):
+    #     """
+    #     Node does not have only a right child
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     self.assertFalse(avl._has_right_child_only())
+
+    # def test_height_single_node(self):
+    #     """
+    #     Height of a single node is 1
+    #     """
+    #     avl = AVLTree(10)
+    #     self.assertEqual(1, avl._height())
+
+    # def test_height_two_levels(self):
+    #     """
+    #     Height of tree with two levels is 2
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     self.assertEqual(2, avl._height())
+
+    # def test_minimum_single_node(self):
+    #     """
+    #     Minimum of single node is itself
+    #     """
+    #     avl = AVLTree(10)
+    #     self.assertEqual(10, avl._minimum().key)
+
+    # def test_minimum_with_left_children(self):
+    #     """
+    #     Minimum is the leftmost node
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(1))
+    #     self.assertEqual(1, avl._minimum().key)
+  
+    # """
+    # Calculating the balance factor of each node 
+    #        10
+    #           \
+    #            20 
+    # """
+    
+    # def test_balance_factor_depth1_right(self):
+    #     """
+    #     The balance_factor of a node is the height of its left subtree
+    #     minus the height of its right subtree.
+    #     Hint: create helper method _caculateBalanceFactor and call it from insert after inserting a node
+    #     Hint2: work from the node you're inserting up to the root recursively,
+    #     modifying your parent's balance factor as you go
+    #     """
+    #     avl = AVLTree(10)
+    #     avl.insert(AVLTree(20))
+    #     self.assertEqual(-1,avl.balance_factor)
+    #     self.assertEqual(0,avl.right.balance_factor)
         
-    # def test_height_single_equal(self):
+    # """
+    # Calculating the balance factor of each node 
+    #            10
+    #           /
+    #          5 
+    # """
+    
+    # def test_balance_factor_depth1_left(self):
     #     """
-    #     Test 4: Inserting a node into a single-level tree appends the new node as the
-    #     left child, when the new node value is equal to the the parent's key.
-    #     (A new node whose key is <= parent key becomes the left child.)
-    #     The height of each node is equal to the height of its largest child + 1
+    #     The balance_factor of a node is the height of its left subtree
+    #     minus the height of its right subtree.
     #     """
-    #     avl_tree = AVLTree(5)
-    #     child = AVLTree(5)
-    #     avl_tree.insert(child)
-    #     self.assertEqual(child, avl_tree.left)
-    #     self.assertEqual(2, avl_tree.height)
-    #     self.assertEqual(1, avl_tree.left.height)
-
-    # def test_height_single_greater(self):
-    #     """
-    #     Test 5: Inserting a node into a single-level tree appends the new node as the
-    #     right child, when the new node key is greater than the parent's key.
-    #     (A new node whose key is > parent key becomes the right child.)
-    #     The height of each node is equal to the height of its largest child + 1
-    #     """
-    #     avl_tree = AVLTree(5)
-    #     child = AVLTree(7)
-    #     avl_tree.insert(child)
-    #     self.assertEqual(child, avl_tree.right)
-    #     self.assertEqual(2, avl_tree.height)
-    #     self.assertEqual(1, avl_tree.right.height)
-
-    # # """
-    # # Cute, single-level trees. (Depth of zero.)
-    # # Insertion
-    # # When inserting a node, calculate the balance factor of each node 
-    # # """
-
-    # def test_balance_factor_single_smaller(self):
-    #     """
-    #     Test 6: Inserting a node into a single-level tree appends the new node as the
-    #     left child, when the new node key is less than the parent's key.
-    #     (A new node whose key is <= parent key becomes the left child.)
-    #     The balance factor of each node is equal to the height of its left sub-tree 
-    #     minus the height of its right subtree
-    #     """
-    #     avl_tree = AVLTree(5)
-    #     child = AVLTree(1)
-    #     avl_tree.insert(child)
-    #     self.assertEqual(child, avl_tree.left)
-    #     self.assertEqual(1, avl_tree.balance_factor)
-    #     self.assertEqual(0, avl_tree.left.balance_factor)
+    #     avl = AVLTree(10)
+    #     avl.insert(AVLTree(5))
+    #     self.assertEqual(1,avl.balance_factor)
+    #     self.assertEqual(0,avl.left.balance_factor)
         
-    # def test_balance_factor_single_equal(self):
-    #     """
-    #     Test 7: Inserting a node into a single-level tree appends the new node as the
-    #     left child, when the new node value is equal to the the parent's key.
-    #     (A new node whose key is <= parent key becomes the left child.)
-    #     The balance factor of each node is equal to the height of its left sub-tree 
-    #     minus the height of its right subtree
-    #     """
-    #     avl_tree = AVLTree(5)
-    #     child = AVLTree(5)
-    #     avl_tree.insert(child)
-    #     self.assertEqual(child, avl_tree.left)
-    #     self.assertEqual(2, avl_tree.height)
-    #     self.assertEqual(1, avl_tree.left.height)
-
-    # def test_balance_factor_single_greater(self):
-    #     """
-    #     Test 8: Inserting a node into a single-level tree appends the new node as the
-    #     right child, when the new node key is greater than the parent's key.
-    #     (A new node whose key is > parent key becomes the right child.)
-    #     The balance factor of each node is equal to the height of its left sub-tree 
-    #     minus the height of its right subtree
-    #     """
-    #     avl_tree = AVLTree(5)
-    #     child = AVLTree(7)
-    #     avl_tree.insert(child)
-    #     self.assertEqual(child, avl_tree.right)
-    #     self.assertEqual(2, avl_tree.height)
-    #     self.assertEqual(1, avl_tree.right.height)
-
-    # # """
-    # # Toddler, two-level trees. (Depth of one.)
-    # # Insertion
-    # # Calculate height and balance factor
-    # # # """
-
-    # def test_height_insert_two_smaller_left(self):
-    #     """
-    #     Test 9: Inserting a node with a key that is less than the left child's key appends
-    #     the new node as the left child's left child. 
-    #     The height of each node is equal to the height of its largest child + 1
+        
+    # """
+    # Calculating the balance factor of each node 
+    #        10
+    #       /   \
+    #      5     20 
+    #              \
+    #               30
+    # """
     
-    #       5             5          
-    #      /     =>      /           
-    #     3             3           
-    #                  /
-    #                 1
-       
+    # def test_balance_factor_depth2_right(self):
     #     """
-    #     avl_tree = AVLTree(5)
-    #     left = AVLTree(3)
-    #     child = AVLTree(1)
-    #     avl_tree.insert(left)
-    #     avl_tree.insert(child)
-    #     self.assertEqual(left, avl_tree.left)
-    #     self.assertEqual(child, avl_tree.left.left)
-    #     self.assertEqual(3, avl_tree.height)
-    #     self.assertEqual(2, avl_tree.left.height)
-    #     self.assertEqual(1, avl_tree.left.left.height)
-
-    # def test_balance_factor_insert_two_smaller_left(self):
+    #     The balance_factor of a node is the height of its left subtree
+    #     minus the height of its right subtree.
     #     """
-    #     Test 10: Inserting a node with a key that is less than the left child's key appends
-    #     the new node as the left child's left child. 
-    #     The height of each node is equal to the height of its largest child + 1
-    
-    #       5             5          
-    #      /     =>      /           
-    #     3             3           
-    #                  /
-    #                 1
-       
-    #     """
-    #     avl_tree = AVLTree(5)
-    #     left = AVLTree(3)
-    #     child = AVLTree(1)
-    #     avl_tree.insert(left)
-    #     avl_tree.insert(child)
-    #     self.assertEqual(left, avl_tree.left)
-    #     self.assertEqual(child, avl_tree.left.left)
-    #     self.assertEqual(2, avl_tree.balance_factor)
-    #     self.assertEqual(1, avl_tree.left.balance_factor)
-    #     self.assertEqual(0, avl_tree.left.left.balance_factor)
-
-    # #********************************************
-    # # !!!!!IMPORTANT!!!!!
-    # #**********************************************
-    # # COMMENT OUT THE FOLLOWING LINES IN THIS FILE BEFORE CONTINUING
-    # # 162-166
-    # # 186-190
-    # #************************************************
-   
-    # def test_return_root_insert_two_smaller(self):
-    #     """
-    #     Test 11: Insert returns the root of the three
-    
-    #        5             5           
-    #              =>     /     
-    #                    3           
-                      
-                     
-    #     """
-    #     avl_tree = five = AVLTree(5)
-    #     three = AVLTree(3)
-    #     avl_tree_root=avl_tree.insert(three)
-    #     self.assertEqual(five, avl_tree_root)
-
-    
-    # # """
-    # # Toddler, two-level trees.
-    # # Insertion
-    # # Left Imbalance, right rotation
-    # # # """    
-    # def test_right_rotate_insert_two_smaller(self):
-    #     """
-    #     Test 12: Inserting a node with a key that is less than the left child's key 
-    #     causes a right rotation
-    
-    #               5           3
-    #              /    =>     / \  
-    #             3           1   5
-    #            /
-    #           1
-       
-    #     HINT:  create a right_rotate method
-    #     """
-    #     avl_tree = five = AVLTree(5)
-    #     three = AVLTree(3)
-    #     one = AVLTree(1)
-    #     avl_tree=avl_tree.insert(three)
-    #     avl_tree=avl_tree.insert(one)
-    #     self.assertEqual(three, avl_tree)
-    #     self.assertEqual(one, avl_tree.left)
-    #     self.assertEqual(five, avl_tree.right)
-
-
-    # def test_height_right_rotate_insert_two_smaller(self):
-    #     """
-    #     Test 13: Inserting a node with a key that is less than the left child's key 
-    #     causes a right rotation
-    #     The height of each node is equal to the height of its largest child + 1
-    
-    #               5           3
-    #              /    =>     / \  
-    #             3           1   5
-    #            /
-    #           1
-       
-    #     """
-    #     avl_tree = five= AVLTree(5)
-    #     three = AVLTree(3)
-    #     one = AVLTree(1)
-    #     avl_tree=avl_tree.insert(three)
-    #     avl_tree=avl_tree.insert(one)
-    #     self.assertEqual(2, three.height)
-    #     self.assertEqual(1, one.height)
-    #     self.assertEqual(1, five.height)
-
-    # def test_balance_factor_right_rotate_insert_two_smaller(self):
-    #     """
-    #     Test 14: Inserting a node with a key that is less than the left child's key 
-    #     causes a right rotation
-    #     The balance factor of each node is equal to the difference between the height
-    #     of the left subtree and the right subtree
-    
-    #              5           3
-    #              /    =>    / \  
-    #             3          1   5
-    #            /
-    #           1
-                     
-    #     """
-    #     avl_tree = five= AVLTree(5)
-    #     three = AVLTree(3)
-    #     one = AVLTree(1)
-    #     avl_tree=avl_tree.insert(three)
-    #     avl_tree=avl_tree.insert(one)
-    #     self.assertEqual(0, three.balance_factor)
-    #     self.assertEqual(0, one.balance_factor)
-    #     self.assertEqual(0, five.balance_factor)
-
-    # # """
-    # # Toddler, two-level trees.
-    # # Insertion
-    # # Right Imbalance, Left rotatation
-    # # # """    
-    # def test_left_rotate_insert_two_smaller_left(self):
-    #     """
-    #     Test 15: Inserting a node with a key that is less than the right child's key 
-    #     causes a left rotation
-    
-    #        5                 7
-    #         \     =>        / \  
-    #          7             5   9
-    #           \        
-    #            9      
-       
-    #     HINT:  create a left_rotate method
-    #     """
-    #     avl_tree = five = AVLTree(5)
-    #     seven = AVLTree(7)
-    #     nine = AVLTree(9)
-    #     avl_tree=avl_tree.insert(seven)
-    #     avl_tree=avl_tree.insert(nine)
-    #     self.assertEqual(seven, avl_tree)
-    #     self.assertEqual(five, avl_tree.left)
-    #     self.assertEqual(nine, avl_tree.right)
-
-
-    # def test_height_left_rotate_insert_two_smaller(self):
-    #     """
-    #     Test 16: Inserting a node with a key that is less than the right child's key 
-    #     causes a left rotation
-    #     The height of each node is equal to the height of its largest child + 1
-    
-    #        5                 7
-    #         \     =>        / \  
-    #          7             5   9
-    #           \        
-    #            9      
-       
-    #     """
-    #     avl_tree = five = AVLTree(5)
-    #     seven = AVLTree(7)
-    #     nine = AVLTree(9)
-    #     avl_tree=avl_tree.insert(seven)
-    #     avl_tree=avl_tree.insert(nine)
-    #     self.assertEqual(2, seven.height)
-    #     self.assertEqual(1, five.height)
-    #     self.assertEqual(1, nine.height)
-
-    # def test_balance_factor_left_rotate_insert_two_smaller(self):
-    #     """
-    #     Test 17: Inserting a node with a key that is less than the right child's key 
-    #     causes a left rotation
-    #     The balance factor of each node is equal to the difference between the height
-    #     of the left subtree and the right subtree
-    #        5                 7
-    #         \     =>        / \  
-    #          7             5   9
-    #           \        
-    #            9      
-       
-    #     """
-    #     avl_tree = five = AVLTree(5)
-    #     seven = AVLTree(7)
-    #     nine = AVLTree(9)
-    #     avl_tree=avl_tree.insert(seven)
-    #     avl_tree=avl_tree.insert(nine)
-    #     self.assertEqual(0, seven.balance_factor)
-    #     self.assertEqual(0, five.balance_factor)
-    #     self.assertEqual(0, nine.balance_factor)
- 
-    # # """
-    # # Toddler, two-level trees.
-    # # Insertion
-    # # Left Subtree Right Imbalance. Left Rotation Followed By Right rotation
-    # # # """    
-    # def test_left_right_rotate_insert_two_smaller(self):
-    #     """
-    #     Test 18: Inserting a node with a key that is greater than the left child's key 
-    #     causes a left rotation followed by a right rotation
-    
-    #               5           5           4
-    #              /    =>     /    =>     / \ 
-    #             3           4           3   5
-    #              \         /
-    #               4       3
-       
-    #     HINT:  left rotate around node 3 followed by right_rotate around node 5
-    #     """
-    #     avl_tree = five = AVLTree(5)
-    #     three = AVLTree(3)
-    #     four = AVLTree(4)
-    #     avl_tree=avl_tree.insert(three)
-    #     avl_tree=avl_tree.insert(four)
-    #     self.assertEqual(four, avl_tree)
-    #     self.assertEqual(three, avl_tree.left)
-    #     self.assertEqual(five, avl_tree.right)
-
-
-    # def test_height_left_right_rotate_insert_two_smaller(self):
-    #     """
-    #     Test 19: Inserting a node with a key that is greater than the left child's key 
-    #     causes a left rotation followed by a right rotation
-    #     The height of each node is equal to the height of its largest child + 1
-    
-    #               5           5           4
-    #              /    =>     /    =>     / \ 
-    #             3           4           3   5
-    #              \         /
-    #               4       3
-       
-    #     """
-    #     avl_tree = five = AVLTree(5)
-    #     three = AVLTree(3)
-    #     four = AVLTree(4)
-    #     avl_tree=avl_tree.insert(three)
-    #     avl_tree=avl_tree.insert(four)
-    #     self.assertEqual(2, four.height)
-    #     self.assertEqual(1, three.height)
-    #     self.assertEqual(1, five.height)
-
-
-    # def test_balance_factor_left_right_rotate_insert_two_smaller(self):
-    #     """
-    #     Test 20: Inserting a node with a key that is greater than the left child's key 
-    #     causes a left rotation followed by a right rotation
-    #     The balance factor of each node is equal to the difference between the height
-    #     of the left subtree and the right subtree
-    
-    #               5           5           4
-    #              /    =>     /    =>     / \ 
-    #             3           4           3   5
-    #              \         /
-    #               4       3
-                     
-    #     """
-    #     avl_tree = five = AVLTree(5)
-    #     three = AVLTree(3)
-    #     four = AVLTree(4)
-    #     avl_tree=avl_tree.insert(three)
-    #     avl_tree=avl_tree.insert(four)
-    #     self.assertEqual(0, four.balance_factor)
-    #     self.assertEqual(0, three.balance_factor)
-    #     self.assertEqual(0, five.balance_factor)
-
-    # # """
-    # # Toddler, two-level trees.
-    # # Insertion
-    # # Right Subtree Left Imbalance. Right Rotation Followed By Left rotation
-    # # # """    
-    # def test_right_left_rotate_insert_two_smaller(self):
-    #     """
-    #     Test 21: Inserting a node with a key that is less than the right child's key 
-    #     causes a right rotation followed by a left rotation
-
-    #        5              5             6
-    #         \     =>       \   =>      / \
-    #          7              6         5   7 
-    #         /                \
-    #        6                  7      
-       
-    #     HINT:  right rotate around node 7 followed by left rotate around node 5
-    #     """
-    #     avl_tree = five = AVLTree(5)
-    #     seven = AVLTree(7)
-    #     six = AVLTree(6)
-    #     avl_tree=avl_tree.insert(seven)
-    #     avl_tree=avl_tree.insert(six)
-    #     self.assertEqual(six, avl_tree)
-    #     self.assertEqual(five, avl_tree.left)
-    #     self.assertEqual(seven, avl_tree.right)
-
-
-    # def test_height_right_left_rotate_insert_two_smaller(self):
-    #     """
-    #     Test 22: Inserting a node with a key that is less than the right child's key 
-    #     causes a right rotation followed by a left rotation
-    #     The height of each node is equal to the height of its largest child + 1
-
-    #        5              5             6
-    #         \     =>       \   =>      / \
-    #          7              6         5   7 
-    #         /                \
-    #        6                  7      
-       
-    #     """
-    #     avl_tree = five = AVLTree(5)
-    #     seven = AVLTree(7)
-    #     six = AVLTree(6)
-    #     avl_tree=avl_tree.insert(seven)
-    #     avl_tree=avl_tree.insert(six)
-    #     self.assertEqual(2, six.height)
-    #     self.assertEqual(1, seven.height)
-    #     self.assertEqual(1, five.height)
-
-
-    # def test_balance_factor_right_left_rotate_insert_two_smaller(self):
-    #     """
-    #     Test 23: Inserting a node with a key that is less than the right child's key 
-    #     causes a right rotation followed by a left rotation
-    #     The balance factor of each node is equal to the difference between the height
-    #     of the left subtree and the right subtree
-    
-    #        5              5             6
-    #         \     =>       \   =>      / \
-    #          7              6         5   7 
-    #         /                \
-    #        6                  7      
-                     
-    #     """
-    #     avl_tree = five = AVLTree(5)
-    #     seven = AVLTree(7)
-    #     six = AVLTree(6)
-    #     avl_tree=avl_tree.insert(seven)
-    #     avl_tree=avl_tree.insert(six)
-    #     self.assertEqual(0, six.balance_factor)
-    #     self.assertEqual(0, seven.balance_factor)
-    #     self.assertEqual(0, five.balance_factor)
+    #     avl = AVLTree(10)
+    #     avl.insert(AVLTree(5))
+    #     avl.insert(AVLTree(20))
+    #     avl.insert(AVLTree(30))
+    #     self.assertEqual(-1,avl.balance_factor)
+    #     self.assertEqual(-1,avl.right.balance_factor)
+    #     self.assertEqual(0,avl.right.right.balance_factor)
+    #     self.assertEqual(0,avl.left.balance_factor)
 
 
     # """
-    # Teen-age, three-level trees. (Depth of two.)
-    # Hint: Don't just curse - be recursive.
+    # Calculating the balance factor of each node 
+    #            10
+    #           /  \
+    #          5    20
+    #         /
+    #        1
     # """
-
-    # def test_three_level_tree_height(self):
+    
+    # def test_balance_factor_depth2_left(self):
     #     """
-    #     Test 24: Height of each node is one bigger than tha max of its child's heights
-    #          10                
-    #         /  \            
-    #       5      15    
-    #      / \                    
-    #     2   7                  
-                         
-                        
-    #     Hint: Recursion, if you didn't already, makes this easy.
+    #     The balance_factor of a node is the height of its left subtree
+    #     minus the height of its right subtree.
     #     """
-    #     avl_tree = AVLTree(10)
-    #     avl_tree.insert(AVLTree(5))
-    #     avl_tree.insert(AVLTree(15))
-    #     avl_tree.insert(AVLTree(2))
-    #     avl_tree.insert(AVLTree(7))
-    #     self.assertEqual(3, avl_tree.height)
-    #     self.assertEqual(2, avl_tree.left.height)
-    #     self.assertEqual(1, avl_tree.left.left.height)
-    #     self.assertEqual(1, avl_tree.left.right.height)
-    #     self.assertEqual(1, avl_tree.right.height)
-
-    # def test_three_level_tree_balance_factor(self):
+    #     avl = AVLTree(10)
+    #     avl.insert(AVLTree(5))
+    #     avl.insert(AVLTree(20))
+    #     avl.insert(AVLTree(1))
+    #     self.assertEqual(1,avl.balance_factor)
+    #     self.assertEqual(1,avl.left.balance_factor)
+    #     self.assertEqual(0,avl.left.left.balance_factor)
+    #     self.assertEqual(0,avl.right.balance_factor)
+    
+    # """
+    # RR Imbalance, left rotation
+    # When node 30 ia inserted, detect a RR imbalance and rotate
+    # left around node 10
+    #        10                     20
+    #           \                  /  \
+    #            20     =>        10   30
+    #              \
+    #               30
+    # """
+    
+    # def test_left_rotation(self):
     #     """
-    #     Test 25: Balance factor of each node is the difference between its heights
-    #          10                
-    #         /  \            
-    #       5      15    
-    #      / \                    
-    #     2   7                  
-                         
-                        
-    #     Hint: Recursion, if you didn't already, makes this easy.
+    #     Inserting node 30 causes a RR imbalance. 
+    #     Rotates left around node 10 returning the new root (node 20)
     #     """
-    #     avl_tree = AVLTree(10)
-    #     avl_tree.insert(AVLTree(5))
-    #     avl_tree.insert(AVLTree(15))
-    #     avl_tree.insert(AVLTree(2))
-    #     avl_tree.insert(AVLTree(7))
-    #     self.assertEqual(1, avl_tree.balance_factor)
-    #     self.assertEqual(0, avl_tree.left.balance_factor)
-    #     self.assertEqual(0, avl_tree.left.left.balance_factor)
-    #     self.assertEqual(0, avl_tree.left.right.balance_factor)
-    #     self.assertEqual(0, avl_tree.right.balance_factor)
-
-    # def test_insert_three_level_tree(self):
-    #     """
-    #     Test 26: Inserting a key results in a left imbalance and a right rotation
-
-    #          10                10                5
-    #        /    \            /    \             / \
-    #       5      15    =>   5      15  =>      2   10
-    #      / \               / \                /    / \
-    #     2   7             2   7              1    7   15
-    #                      /
-    #                     1
-    #     Hint: Recursion, if you didn't already, makes this easy.
-    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.insert(AVLTree(30))
+    #     self.assertEqual(20,avl.key)
+    #     self.assertEqual(30,avl.right.key)
+    #     self.assertEqual(10,avl.left.key)
+    
         
-    #     one=AVLTree(1)
-    #     two=AVLTree(2)
-    #     five=AVLTree(5)
-    #     seven=AVLTree(7)
-    #     ten=AVLTree(10)
-    #     fifteen=AVLTree(15)
-    #     avl_tree = ten
-    #     avl_tree = avl_tree.insert(five)
-    #     avl_tree = avl_tree.insert(fifteen)
-    #     avl_tree = avl_tree.insert(two)
-    #     avl_tree = avl_tree.insert(seven)
-    #     avl_tree = avl_tree.insert(one)
-
-    #     self.assertEqual(five, avl_tree)
-    #     self.assertEqual(two, avl_tree.left)
-    #     self.assertEqual(one, avl_tree.left.left)
-    #     self.assertEqual(ten, avl_tree.right)
-    #     self.assertEqual(seven, avl_tree.right.left)
-    #     self.assertEqual(fifteen, avl_tree.right.right)
-
-    # def test_three_level_tree_height_right_heavy(self):
+    # """
+    # recalculate the balance factor for the old root (10) and the new root (20). Note: All other
+    # balance factors stay the same and do not need to be recalculated.
+    # Formulas to recalculate balance factors after a left rotation are provided in your reading and 
+    # given here for your convenience.
+    
+    #  old_root.balance_factor = old_root.balance_factor + 1 - min(new_root.balance_factor, 0)
+    #  new_root.balance_factor = new_root.balance_factor + 1 + max(old_root.balance_factor, 0)
+    
+    # In this example 10 is old root and 20 is new root
+    
+    #        10                     20
+    #           \                  /  \
+    #            20     =>        10   30
+    #              \
+    #               30
+    # """
+    
+    # def test_recalculate_balance_factors_after_left_rotation(self):
     #     """
-    #     Test 27: Height of each node is one bigger than than max of its child's heights
-    #          10                
-    #         /  \            
-    #        5    15    
-    #             / \                 
-    #            12  20               
-                         
-                        
-    #     Hint: Recursion, if you didn't already, makes this easy.
+    #     Inserting node 30 causes a RR imbalance. 
+    #     Rotate left and recalculate the load factors for the old root and the new root
     #     """
-    #     avl_tree = AVLTree(10)
-    #     avl_tree.insert(AVLTree(5))
-    #     avl_tree.insert(AVLTree(15))
-    #     avl_tree.insert(AVLTree(12))
-    #     avl_tree.insert(AVLTree(20))
-    #     self.assertEqual(3, avl_tree.height)
-    #     self.assertEqual(1, avl_tree.left.height)
-    #     self.assertEqual(2, avl_tree.right.height)
-    #     self.assertEqual(1, avl_tree.right.left.height)
-    #     self.assertEqual(1, avl_tree.right.right.height)
-
-    # def test_three_level_tree_right_heavy_balance_factor(self):
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.insert(AVLTree(30))
+    #     self.assertEqual(0,avl.balance_factor)
+    #     self.assertEqual(0,avl.right.balance_factor)
+    #     self.assertEqual(0,avl.left.balance_factor)
+        
+    # """
+    # LL Imbalance, right rotation
+    # When node 1 ia inserted, detect a LL imbalance and rotate
+    # right around node 10
+    #        10                  5
+    #        /                  /  \
+    #       5     =>           1   10
+    #      /
+    #     1
+    # """
+    
+    # def test_right_rotation(self):
     #     """
-    #     Test 28: Balance factor of each node is the difference between its children's heights
-    #         10                
-    #         /  \            
-    #        5    15    
-    #             / \                 
-    #            12  20              
-                                          
-    #     Hint: Recursion, if you didn't already, makes this easy.
+    #     Inserting node 1 causes a LL imbalance. 
+    #     Rotates right around node 10 returning the new root (node 5)
     #     """
-    #     avl_tree = AVLTree(10)
-    #     avl_tree.insert(AVLTree(5))
-    #     avl_tree.insert(AVLTree(15))
-    #     avl_tree.insert(AVLTree(12))
-    #     avl_tree.insert(AVLTree(20))
-    #     self.assertEqual(-1, avl_tree.balance_factor)
-    #     self.assertEqual(0, avl_tree.left.balance_factor)
-    #     self.assertEqual(0, avl_tree.right.balance_factor)
-    #     self.assertEqual(0, avl_tree.right.left.balance_factor)
-    #     self.assertEqual(0, avl_tree.right.right.balance_factor)
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(1))
+    #     self.assertEqual(5,avl.key)
+    #     self.assertEqual(10,avl.right.key)
+    #     self.assertEqual(1,avl.left.key)
        
-
-    # def test_insert_three_level_tree_right_heavy(self):
+    # """
+    # recalculate the balance factor for the old root (10) and the new root (5). Note: All other
+    # balance factors stay the same and do not need to be recalculated.
+    # Formulas to recalculate balance factors after a right rotation are provided in your reading and 
+    # given here for your convenience.
+    
+    #  old_root.balance_factor = old_root.balance_factor - 1 - mmax(new_root.balance_factor, 0)
+    #  new_root.balance_factor = new_root.balance_factor - 1 + mim(old_root.balance_factor, 0)
+    
+    # In this example 10 is old root and 5 is new root
+    
+    #        10                  5
+    #        /                  /  \
+    #       5     =>           1   10
+    #      /
+    #     1
+    # """
+    
+    # def test_recalculate_balance_factors_after_right_rotation(self):
     #     """
-    #     Test 29: Inserting a key results in a left imbalance and a right rotation
-
-    #          10                
-    #         /  \            
-    #        5    15    
-    #             / \                 
-    #            12  20  
+    #     Inserting node 1 causes a LL imbalance. 
+    #     Rotate right and recalculate the load factors for the old root and the new root
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(1))
+    #     self.assertEqual(0,avl.balance_factor)
+    #     self.assertEqual(0,avl.right.balance_factor)
+    #     self.assertEqual(0,avl.left.balance_factor)
         
-
-    #          10                10                15
-    #        /    \              / \               / \
-    #       5      15    =>     5   15    =>      10   20
-    #             / \               / \           / \    \
-    #            12   20           12  20        5   12   25
-    #                                   \
-    #                                    25
-    #     Hint: Recursion, if you didn't already, makes this easy.
+    # """
+    # When node 15 ia inserted, detect a RL imbalance. To rebalance, its a 2 step process
+    # First, perform a right rotation around node 20.
+    # Then, perform a left rotation around node 10
+    
+    #        10            10            15
+    #           \            \           / \
+    #            20     =>    15  =>    10  20
+    #            /             \
+    #          15               20
+    
+    # HINT:  In this case, the balance factor of node 10 is -2 (its the nearest unbalanced ancestor) 
+    # and the balance factor of node 20 (its right child) is 1. If this were not the 
+    # case, it would be a RR imbalance, requiring a single left rotation  
+    
+    # """
+    
+    # def test_right_left_rotation(self):
     #     """
+    #     Inserting node 15 causes a RL imbalance. 
+    #     Results in a rotate right around node 20 followed by a rotate left around node 10
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.insert(AVLTree(15))
+    #     self.assertEqual(15,avl.key)
+    #     self.assertEqual(20,avl.right.key)
+    #     self.assertEqual(10,avl.left.key)
+    
+        
+    # """
+    # recalculate the balance factor for the old root  and the new root. Note: All other
+    # balance factors stay the same and do not need to be recalculated.
+    # Formulas to recalculate balance factors after rotations are provided in your reading and 
+    # given here for your convenience.
+    
+    #  Balance factor formulas after a left rotation:
+    #  old_root.balance_factor = old_root.balance_factor + 1 - min(new_root.balance_factor, 0)
+    #  new_root.balance_factor = new_root.balance_factor + 1 + max(old_root.balance_factor, 0)
+    
+    #  Balance factor formulas after a right rotation:
+    #  old_root.balance_factor = old_root.balance_factor - 1 - mmax(new_root.balance_factor, 0)
+    #  new_root.balance_factor = new_root.balance_factor - 1 + mim(old_root.balance_factor, 0)
+    
+    # In this example, for the first rotation, 20 is old root and 15 is new root (right rotation around node 20)
+    # For the second rotation, 10 is the old root and 16 is the new root (left rotation around node 10)
+    
+    #        10            10            15
+    #           \            \           / \
+    #            20     =>    15  =>    10  20
+    #            /             \
+    #          15               20
+    # """
+    
+    # def test_recalculate_balance_factors_after_right_left_rotation(self):
+    #     """
+    #     Inserting node 15 causes a RL imbalance. 
+    #     Results in a rotate right around node 20 followed by a rotate left around node 10
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.insert(AVLTree(15))
+    #     self.assertEqual(0,avl.balance_factor)
+    #     self.assertEqual(0,avl.right.balance_factor)
+    #     self.assertEqual(0,avl.left.balance_factor)
+        
+    # """
+    # When node 7 ia inserted, detect a LR imbalance. To rebalance, its a 2 step process
+    # First, perform a left rotation around node 5.
+    # Then, perform a right rotation around node 10
+    
+    #        10           10        7
+    #        /            /        /  \
+    #       5     =>     7        5   10
+    #        \          /
+    #         7        5
+    
+    # HINT:  In this case, the balance factor of node 10 is 22 (its the nearest unbalanced ancestor) 
+    # and the balance factor of node 5 (its left child) is -1. If this were not the 
+    # case, it would be a LL imbalance, requiring a single right rotation  
+    
+    # """
+    
+    # def test_left_right_rotation(self):
+    #     """
+    #     Inserting node 7 causes a LR imbalance. 
+    #     Results in a rotate left around node 5 followed by a rotate right around node 10
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(7))
+    #     self.assertEqual(7,avl.key)
+    #     self.assertEqual(10,avl.right.key)
+    #     self.assertEqual(5,avl.left.key)
+    
+        
+    # """
+    # recalculate the balance factor for the old root  and the new root. Note: All other
+    # balance factors stay the same and do not need to be recalculated.
+    # Formulas to recalculate balance factors after rotations are provided in your reading and 
+    # given here for your convenience.
+    
+    #  Balance factor formulas after a left rotation:
+    #  old_root.balance_factor = old_root.balance_factor + 1 - min(new_root.balance_factor, 0)
+    #  new_root.balance_factor = new_root.balance_factor + 1 + max(old_root.balance_factor, 0)
+    
+    #  Balance factor formulas after a right rotation:
+    #  old_root.balance_factor = old_root.balance_factor - 1 - mmax(new_root.balance_factor, 0)
+    #  new_root.balance_factor = new_root.balance_factor - 1 + mim(old_root.balance_factor, 0)
+    
+    
+    # In this example, for the first rotation, 5 is old root and 7 is new root (left rotation around node 5)
+    # For the second rotation, 10 is the old root and 7 is the new root (right rotation around node 10)
+    
+    #        10           10        7
+    #        /            /        /  \
+    #       5     =>     7        5   10
+    #        \          /
+    #         7        5
+    # """
+    
+    # def test_recalculate_balance_factors_after_left_right_rotation(self):
+    #     """
+    #     Inserting node 7 causes a LR imbalance. 
+    #     Results in a rotate left around node 5 followed by a rotate right around node 10
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(7))
+    #     self.assertEqual(0,avl.balance_factor)
+    #     self.assertEqual(0,avl.right.balance_factor)
+    #     self.assertEqual(0,avl.left.balance_factor)
+        
+    # def test_larger_tree_LL_imbalance(self):
+    #     """
+    #     Inserting node 1 causes a LL imbalance. 
+    #     Results in a rotate right around node 5 
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.insert(AVLTree(3))
+    #     avl = avl.insert(AVLTree(1))
+    #     self.assertEqual(10,avl.key)
+    #     self.assertEqual(20,avl.right.key)
+    #     self.assertEqual(3,avl.left.key)
+    #     self.assertEqual(1,avl.left.left.key)
+    #     self.assertEqual(5,avl.left.right.key)
+            
+    # def test_larger_tree_LL_balance_factors(self):
+    #     """
+    #     Inserting node 1 causes a LL imbalance. 
+    #     Results in a rotate right around node 5 
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.insert(AVLTree(3))
+    #     avl = avl.insert(AVLTree(1))
+    #     self.assertEqual(1,avl.balance_factor)
+    #     self.assertEqual(0,avl.right.balance_factor)
+    #     self.assertEqual(0,avl.left.balance_factor)
+    #     self.assertEqual(0,avl.left.left.balance_factor)
+    #     self.assertEqual(0,avl.left.right.balance_factor)
 
-    #     five=AVLTree(5)
-    #     ten=AVLTree(10)
-    #     twelve=AVLTree(12)
-    #     fifteen=AVLTree(15)
-    #     twenty=AVLTree(20)
-    #     twentyfive=AVLTree(25)
-    #     avl_tree = ten
-    #     avl_tree = avl_tree.insert(five)
-    #     avl_tree = avl_tree.insert(fifteen)
-    #     avl_tree = avl_tree.insert(twelve)
-    #     avl_tree = avl_tree.insert(twenty)
-    #     avl_tree = avl_tree.insert(twentyfive)
 
-    #     self.assertEqual(fifteen, avl_tree)
-    #     self.assertEqual(ten, avl_tree.left)
-    #     self.assertEqual(five, avl_tree.left.left)
-    #     self.assertEqual(twelve, avl_tree.left.right)
-    #     self.assertEqual(twenty, avl_tree.right)
-    #     self.assertEqual(twentyfive, avl_tree.right.right)
+    # def test_delete_leaf_node(self):
+    #     """
+    #     Delete a leaf node (no children)
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.delete(5)
+    #     self.assertIsNone(avl.search(5))
+    #     self.assertEqual(10, avl.key)
+    #     self.assertEqual(20, avl.right.key)
+    #     self.assertIsNone(avl.left)
+
+    # def test_delete_node_with_right_child_only(self):
+    #     """
+    #     Delete a node with only a right child
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.insert(AVLTree(30))
+    #     avl = avl.delete(20)
+    #     self.assertIsNone(avl.search(20))
+    #     self.assertEqual(30, avl.key)
+    #     self.assertEqual(10, avl.left.key)
+    #     self.assertIsNone(avl.right)
+
+    # def test_delete_node_with_left_child_only(self):
+    #     """
+    #     Delete a node with only a left child
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(1))
+    #     avl = avl.delete(5)
+    #     self.assertIsNone(avl.search(5))
+    #     self.assertEqual(10, avl.key)
+    #     self.assertEqual(1, avl.left.key)
+
+    # def test_delete_node_with_two_children(self):
+    #     """
+    #     Delete a node with two children (uses in-order successor)
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.insert(AVLTree(15))
+    #     avl = avl.insert(AVLTree(30))
+    #     avl = avl.delete(10)
+    #     self.assertIsNone(avl.search(10))
+    #     self.assertEqual(15, avl.key)
+    #     self.assertEqual(5, avl.left.key)
+    #     self.assertEqual(20, avl.right.key)
+
+    # def test_delete_root_leaf(self):
+    #     """
+    #     Delete the only node in the tree (root is a leaf)
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.delete(10)
+    #     self.assertIsNone(avl)
+
+    # def test_delete_triggers_rebalance(self):
+    #     """
+    #     Delete a node that triggers a rebalance
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.insert(AVLTree(30))
+    #     avl = avl.insert(AVLTree(40))
+    #     avl = avl.delete(5)
+    #     # Tree should rebalance after deletion
+    #     self.assertIsNone(avl.search(5))
+    #     self.assertTrue(abs(avl.balance_factor) <= 1)
+
+    # def test_delete_nonexistent_key(self):
+    #     """
+    #     Attempt to delete a key that doesn't exist
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.delete(999)
+    #     self.assertEqual(10, avl.key)
+    #     self.assertEqual(5, avl.left.key)
+    #     self.assertEqual(20, avl.right.key)
+
+    # def test_search_root(self):
+    #     """
+    #     Search for the root node
+    #     """
+    #     avl = AVLTree(10)
+    #     result = avl.search(10)
+    #     self.assertIsNotNone(result)
+    #     self.assertEqual(10, result.key)
+
+    # def test_search_left_child(self):
+    #     """
+    #     Search for a node in the left subtree
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     result = avl.search(5)
+    #     self.assertIsNotNone(result)
+    #     self.assertEqual(5, result.key)
+
+    # def test_search_right_child(self):
+    #     """
+    #     Search for a node in the right subtree
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     result = avl.search(20)
+    #     self.assertIsNotNone(result)
+    #     self.assertEqual(20, result.key)
+
+    # def test_search_deep_left(self):
+    #     """
+    #     Search for a node deep in the left subtree
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.insert(AVLTree(1))
+    #     avl = avl.insert(AVLTree(3))
+    #     avl = avl.insert(AVLTree(0))
+    #     result = avl.search(0)
+    #     self.assertIsNotNone(result)
+    #     self.assertEqual(0, result.key)
+
+    # def test_search_deep_right(self):
+    #     """
+    #     Search for a node deep in the right subtree
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     avl = avl.insert(AVLTree(30))
+    #     avl = avl.insert(AVLTree(40))
+    #     avl = avl.insert(AVLTree(50))
+    #     result = avl.search(50)
+    #     self.assertIsNotNone(result)
+    #     self.assertEqual(50, result.key)
+
+    # def test_search_nonexistent(self):
+    #     """
+    #     Search for a key that doesn't exist
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(20))
+    #     result = avl.search(999)
+    #     self.assertIsNone(result)
+
+    # def test_search_empty_tree(self):
+    #     """
+    #     Search in a tree with only root (no children)
+    #     """
+    #     avl = AVLTree(10)
+    #     result = avl.search(5)
+    #     self.assertIsNone(result)
+
+    # def test_search_after_rotations(self):
+    #     """
+    #     Search for nodes after tree has been rebalanced via rotations
+    #     """
+    #     avl = AVLTree(10)
+    #     avl = avl.insert(AVLTree(5))
+    #     avl = avl.insert(AVLTree(7))  # Causes LR rotation
+    #     self.assertEqual(7, avl.search(7).key)
+    #     self.assertEqual(5, avl.search(5).key)
+    #     self.assertEqual(10, avl.search(10).key)
 
 
 if __name__ == '__main__':
