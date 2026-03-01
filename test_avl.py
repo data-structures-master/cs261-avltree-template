@@ -40,6 +40,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     A AVL tree can accept a key paramter
     #     """
     #     avl = AVLTree(10)
+    #     self.assertEqual(10,avl.key)
 
     # """
     # Test helper methods
@@ -154,13 +155,13 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(0, avl._height())
 
     # def test_height_two_levels_right_child_only(self):
-    #     """
-    #     Height is the maximum # of edges from the node to a leaf
-    #        10
-    #          \
-    #           20
-    #     Hint:  Think recursively.
-    #     """
+    #     # """
+    #     # Height is the maximum # of edges from the node to a leaf
+    #     #    10
+    #     #      \
+    #     #       20
+    #     # Hint:  Think recursively.
+    #     # """
     #     avl = AVLTree(10)
     #     avl.insert(AVLTree(20))
     #     self.assertEqual(1, avl._height())
@@ -178,7 +179,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(1, avl._height())
 
     # def test_height_two_levels_two_children(self):
-    #     """
+    #     r"""
     #     Height is the maximum # of edges from the node to a leaf
     #        10
     #        /\
@@ -191,7 +192,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(1, avl._height())
 
     # def test_height_multilevel(self):
-    #     """
+    #     r"""
     #         10
     #       /   \
     #      5     20 
@@ -225,7 +226,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     avl = avl.insert(smallest_node)
     #     self.assertEqual(smallest_node, avl._minimum())
   
-    # """
+    # r"""
     # Calculating the balance factor of each node 
     #        10
     #           \
@@ -233,7 +234,7 @@ class TestBinarySearchTree(unittest.TestCase):
     # """
     
     # def test_calculate_balance_factor_depth1_right(self):
-    #     """
+    #     r"""
     #     The balance_factor of a node is the height of its left subtree
     #     minus the height of its right subtree.
 
@@ -264,7 +265,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(0,avl.left._calculate_balance_factor())
         
         
-    # """
+    # r"""
     # Calculating the balance factor of each node 
     #        10
     #       /   \
@@ -288,7 +289,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(0,avl.right.right._calculate_balance_factor())
         
 
-    # """
+    # r"""
     # Calculating the balance factor of each node 
     #            10
     #           /  \
@@ -311,16 +312,9 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(0,avl.left.left._calculate_balance_factor())
     #     self.assertEqual(0,avl.right._calculate_balance_factor())
 
-
-    # """
-    # Insertion updates the balance factor of each node 
-    #        10
-    #           \
-    #            20
-    # """
     
     # def test_balance_factor_on_insertion_right(self):
-    #     """
+    #     r"""
     #     When inserting a node, the balance factor of each node is updated
     #     10  
     #       \
@@ -346,7 +340,7 @@ class TestBinarySearchTree(unittest.TestCase):
         
     
     # def test_balance_factor_on_insertion_depth2_right(self):
-    #     """
+    #     r"""
     #     The balance_factor of a node is the height of its left subtree
     #     minus the height of its right subtree.
 
@@ -367,7 +361,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(0,avl.right.right.balance_factor)
         
 
-    # """
+    # r"""
     # Calculating the balance factor of each node 
     #            10
     #           /  \
@@ -377,7 +371,7 @@ class TestBinarySearchTree(unittest.TestCase):
     # """
     
     # def test_balance_factor_on_insertion_depth2_left(self):
-    #     """
+    #     r"""
     #     The balance_factor of a node is the height of its left subtree
     #     minus the height of its right subtree.
 
@@ -397,7 +391,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(0,avl.left.left.balance_factor)
     #     self.assertEqual(0,avl.right.balance_factor)
 
-    # """
+    # r"""
     # RR Imbalance, left rotation
     # When node 30 is inserted, detect a RR imbalance and rotate
     # left around node 10
@@ -424,7 +418,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(10,avl.left.key)
     
         
-    # """
+    # r"""
     # Recalculate balance factors for:
     # the old root (10)
     # the new root (20). 
@@ -461,7 +455,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(0,avl.right.balance_factor)
     #     self.assertEqual(0,avl.left.balance_factor)
         
-    # """
+    # r"""
     # LL Imbalance, right rotation
     # When node 1 ia inserted, detect a LL imbalance and rotate
     # right around node 10
@@ -484,7 +478,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(10,avl.right.key)
     #     self.assertEqual(1,avl.left.key)
        
-    # """
+    # r"""
     # Recalculate the balance factor for:
     # - the old root (10)
     # - the new root (5). 
@@ -517,7 +511,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(0,avl.right.balance_factor)
     #     self.assertEqual(0,avl.left.balance_factor)
         
-    # """
+    # r"""
     # RL imbalance.  Right rotation followed by left rotation
     # When node 15 ia inserted, detect a RL imbalance. To rebalance, its a 2 step process
     # First, perform a right rotation around node 20.
@@ -549,7 +543,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(10,avl.left.key)
     
         
-    # """
+    # r"""
     # Recalculate the balance factor for
     #  - the old root
     #  - the new root. Note: 
@@ -589,7 +583,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(0,avl.right.balance_factor)
     #     self.assertEqual(0,avl.left.balance_factor)
         
-    # """
+    # r"""
     # LR imbalance.  Left rotation followed by right rotation
     # When node 7 ia inserted, detect a LR imbalance. To rebalance, its a 2 step process
     # First, perform a left rotation around node 5.
@@ -620,7 +614,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(5,avl.left.key)
     
         
-    # """
+    # r"""
     # Recalculate the balance factor
     # - for the old root
     # - for the new root. 
@@ -661,7 +655,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertEqual(0,avl.left.balance_factor)
         
     # def test_larger_tree_LL_imbalance(self):
-    #     """
+    #     r"""
     #     Inserting node 1 causes a LL imbalance. 
     #     Results in a rotate right around node 5 
     #                10                10
@@ -813,7 +807,7 @@ class TestBinarySearchTree(unittest.TestCase):
     # """    
 
     # def test_delete_causes_RR_imbalance(self):
-    #     """
+    #     r"""
     #     Delete causes RR imbalance requiring left rotation
     #     Initial:     10
     #                 /  \
@@ -851,7 +845,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertTrue(abs(avl.right.balance_factor) <= 1)
 
     # def test_delete_causes_LL_imbalance(self):
-    #     """
+    #     r"""
     #     Delete causes LL imbalance requiring right rotation
     #     Initial:     30
     #                 /  \
@@ -889,7 +883,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertTrue(abs(avl.right.balance_factor) <= 1)
 
     # def test_delete_causes_RL_imbalance(self):
-    #     """
+    #     r"""
     #     Delete causes RL imbalance requiring right then left rotation
     #     Initial:     10
     #                 /  \
@@ -929,7 +923,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertTrue(abs(avl.right.balance_factor) <= 1)
 
     # def test_delete_causes_LR_imbalance(self):
-    #     """
+    #     r"""
     #     Delete causes LR imbalance requiring left then right rotation
     #     Initial:     30
     #                 /  \
@@ -965,6 +959,7 @@ class TestBinarySearchTree(unittest.TestCase):
     #     self.assertTrue(abs(avl.balance_factor) <= 1)
     #     self.assertTrue(abs(avl.left.balance_factor) <= 1)
     #     self.assertTrue(abs(avl.right.balance_factor) <= 1)
+
 
 
 if __name__ == '__main__':
